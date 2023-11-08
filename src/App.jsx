@@ -8,28 +8,33 @@ function App() {
 
   function handleClick(e) {
     e.preventDefault()
+    //console.log(e.target.id)
     const data = new FormData(e.target)
-    console.log(e.target)
+    // console.log(e.target.value)
     console.log(data.get("name"))
-    console.log(data.get("email"))
-    console.log(data.get("what"))
+    // console.log(data.get("email"))
+    // console.log(data.get("what"))
   }
 
 
   function Form() {
-  const [cv, setCv] = useState(cvData)
     return (
       <>
       <form onSubmit={handleClick}>
         <h1>CV</h1>
-        <Fieldset legends={formStructure} data={cv}
-        />
-        <button>SEND</button>
-        <button>EDIT</button>
+        <Fieldset legends={formStructure} />
+        <Button title="SEND" type="submit"/>
+        <Button title="EDIT" type="button" />
       </form>
       </>
     )
-  }  
+  }
+
+  function Button({title, type}) {
+    return (
+      <button id={title} type={type}>{title}</button>
+    )
+  }
 
   function Label({legend, pos}) { 
     const [data, setData] = useState(cvData)
@@ -54,6 +59,7 @@ function App() {
     return (
       <input
         key={inputKey}
+        type={typeof inputValues}
         id={inputKey}
         name={inputKey}
         value={inputValues}
@@ -62,13 +68,13 @@ function App() {
     )
   }
 
-  function Fieldset({legends, data}) {
+  function Fieldset({legends}) {
     const listCategories = legends.map((legend, index) => {
       return (
         <>
         <fieldset>
           <legend>{legend.category}</legend>
-            <Label legend={legends[index]} data={data} pos={index}/> 
+            <Label key={index} legend={legends[index]} pos={index}/> 
         </fieldset>
         </>
       )
