@@ -1,21 +1,35 @@
 
-export const cvData = 
+export const cvData = [
     {
-      basicInfo: {
-        name: 'john',
-        email: 'doe',
-        tel: 1234,
-      },
-      
-    }
-  
-  {/* <label htmlFor="name">Name:{' '}
-          <Input 
-            
-            person={cv}
-          />
-        </label> */}
+      name: 'john' ,
+      email: 'doe' ,
+      tel: 1234 ,
+    },
+    { 
+      where: 'bob' ,
+      when: 'doe' ,
+      what: 5678 ,
+    },
+    // {
+    //   one: 'bob' ,
+    //   two: 'doe' ,
+    //   three: 1234 ,
+    // },
+    
+  ]
 
 
-
-   //     {label}
+export const formStructure = [
+  {
+    category: "BASIC INFO",
+    labels: ["Name: ", "Email: ", "Tel: "]
+  },
+  {
+    category: "EDUC",
+    labels: ["where: ", "when: ", "what: "]
+  },
+  // {
+  //   category: "EDUC",
+  //   labels: ["where: ", "when: ", "what: "]
+  // },
+]

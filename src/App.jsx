@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { cvData } from './components/data'
+import { formStructure } from './components/data'
 
 import './App.css'
 
@@ -8,65 +9,66 @@ function App() {
   function handleClick(e) {
     e.preventDefault()
     const data = new FormData(e.target)
+    console.log(e.target)
     console.log(data.get("name"))
     console.log(data.get("email"))
-    console.log(data.get("tel"))
+    console.log(data.get("what"))
   }
 
-  function handleChange(e) {
-
-  }
-  
 
   function Form() {
   const [cv, setCv] = useState(cvData)
     return (
       <>
       <form onSubmit={handleClick}>
-        <h2>BASIC INFO</h2>
-        <Fieldset>
-          <Label>
-            <Input></Input>
-          </Label>
-        </Fieldset>
-
+        <h1>CV</h1>
+        <Fieldset legends={formStructure} data={cv}
+        />
         <button>SEND</button>
         <button>EDIT</button>
       </form>
       </>
     )
   }  
-  
-  function Label({children}) {
-    const labels = ["Name: ", "Email: ", "Tel: ", "Test: "]
-    const listLabels = labels.map((label, index) => {
-      return <label htmlFor='tets' key={index}>{label}
-        {children}
+
+  function Label({legend, pos}) { 
+    const [data, setData] = useState(cvData)
+    const listLabels = legend.labels.map((label, index) => {
+    const inputKey = Object.keys(data[pos])
+    const inputValue = Object.values(data[pos])
+      return <label key={index}>{label}
+        <Input inputKey={inputKey[index]} inputValues={inputValue[index]} data={data} setData={setData}/>   
       </label>
     })
     return listLabels
   }
 
-  function Input() {  // {person}
-  //  const inputList = cv.
+  function Input({inputKey, inputValues, data, setData}) { 
+
+  function handleChange(e) {
+    const newState = data.map(obj => {
+      return {...obj, [e.target.id]: e.target.value}
+    })
+    setData(newState)
+  }
     return (
       <input
-        id="hey"
-        name="hey"
-        value="test" // {person.basicInfo.name}
+        key={inputKey}
+        id={inputKey}
+        name={inputKey}
+        value={inputValues}
         onChange={handleChange}
       />
     )
   }
 
-  function Fieldset({children}) {
-    const categories = ["BASIC INFO", "EDUCATION", "WORK"]
-    const listCategories = categories.map((category, index) => {
+  function Fieldset({legends, data}) {
+    const listCategories = legends.map((legend, index) => {
       return (
         <>
         <fieldset>
-          <legend>{category}</legend>
-          {children}
+          <legend>{legend.category}</legend>
+            <Label legend={legends[index]} data={data} pos={index}/> 
         </fieldset>
         </>
       )
@@ -74,12 +76,9 @@ function App() {
     return listCategories
   }
 
-
-
   return (
     <Form></Form>
   )
-
 }
 
 export default App
