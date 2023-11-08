@@ -1,6 +1,6 @@
 
 export const cvData = [
-    {
+    { 
       name: 'john' ,
       email: 'doe' ,
       tel: 1234 ,
@@ -10,12 +10,6 @@ export const cvData = [
       when: 'doe' ,
       what: 5678 ,
     },
-    // {
-    //   one: 'bob' ,
-    //   two: 'doe' ,
-    //   three: 1234 ,
-    // },
-    
   ]
 
 
@@ -28,10 +22,6 @@ export const formStructure = [
     category: "EDUC",
     labels: ["where: ", "when: ", "what: "]
   },
-  // {
-  //   category: "EDUC",
-  //   labels: ["where: ", "when: ", "what: "]
-  // },
 ]
 
 // function Form() {
