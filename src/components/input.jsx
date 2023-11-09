@@ -1,9 +1,12 @@
 
-
-export default function Input({inputKey, inputValues, onInput}) {
+export default function Input({inputKey, inputValues, cv, setCv}) {
  
   function handleInput(e) {
-    onInput(e)
+    setCv(cv.map(obj => {
+        if (Object.hasOwn(obj, e.target.id)) {
+          return {...obj, [e.target.id]: e.target.value}
+        } else return obj
+      }))
   }
     return (
       <input
@@ -16,20 +19,3 @@ export default function Input({inputKey, inputValues, onInput}) {
       />
     )
   }
-  
-  
-
-  
-
-  
-  // IGNORE
-  
-  // function handleChange(e) {
-    //   const newState = data.map((obj, index) => {
-    //     if (Object.hasOwn(obj, e.target.id)) { // if key of object matches id of element     
-    //       return {...obj, [e.target.id]: e.target.value}
-    //     }  return obj
-    //   })
-    //   console.log(newState)
-    //   setCv(newState)
-    // }
