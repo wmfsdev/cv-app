@@ -23,12 +23,3 @@ export const formStructure = [
     labels: ["where: ", "when: ", "what: "]
   },
 ]
-
-// function Form() {
-// const [cv, setCv] = useState(cvData)
-
-// <Fieldset legends={formStructure} data={cv}
-
-// function Fieldset({legends, data}) {
-
-//   <Label legend={legends[index]} data={data} pos={index}/> 

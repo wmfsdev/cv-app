@@ -5,7 +5,7 @@ import { formStructure } from './components/data'
 import './App.css'
 
 function App() {
- // const [cv, setCv] = useState(cvData)
+const [cv, setCv] = useState(cvData)
 
   function handleClick(e) {
     e.preventDefault()
@@ -35,31 +35,39 @@ function App() {
     )
   }
 
-  function Label({key, legend, pos}) { // , data, setCv
-    const [cv, setCv] = useState(cvData)
-
+  function Label({legend, pos}) {
+    // cv={cv} setCv={setCv}
     const listLabels = legend.labels.map((label, index) => {
     const inputKey = Object.keys(cv[pos])
     const inputValue = Object.values(cv[pos])
       return <label key={index}>{label}
-        <Input inputKey={inputKey[index]} inputValues={inputValue[index]} data={cv} setCv={setCv}/>   
+        <Input inputKey={inputKey[index]} inputValues={inputValue[index]} onInput={handleInput}/>   
       </label>
     })
     return listLabels
   }
   
+  function handleInput(e) {
+    setCv(cv.map(obj => {
+      if (Object.hasOwn(obj, e.target.id)) {
+        return {...obj, [e.target.id]: e.target.value}
+      } else return obj
+    }))
+  }
 
-  function Input({inputKey, inputValues, data, setCv}) {
-   
-    function handleChange(e) {
-      const newState = data.map(obj => {
-        if (Object.hasOwn(obj, e.target.id)) { // if key of object matches id of element
-          console.log(Object.hasOwn(obj, e.target.id), e.target.id)
-          return {...obj, [e.target.id]: e.target.value}
-        } else return obj
-      })
-      setCv(newState)
-    }
+  function Input({inputKey, inputValues, onInput}) {
+    // function handleChange(e) {
+    //   const newState = data.map((obj, index) => {
+    //     if (Object.hasOwn(obj, e.target.id)) { // if key of object matches id of element     
+    //       return {...obj, [e.target.id]: e.target.value}
+    //     }  return obj
+    //   })
+    //   console.log(newState)
+    //   setCv(newState)
+    // }
+  function handleInput(e) {
+    onInput(e)
+  }
 
     return (
       <input
@@ -68,7 +76,7 @@ function App() {
         id={inputKey}
         name={inputKey}
         value={inputValues}
-        onChange={handleChange}
+        onChange={handleInput}
       />
     )
   }
@@ -87,19 +95,16 @@ function App() {
     return listCategories
   }
 
-  // function DisplayCV({data, setCv}) {
-  //  // const [data, setData] = useState(cvData)
-  //   console.log(data)
-  //   return (
-  //     <h1>{data[0].name}</h1>
-  //   )
-  // }
-// data={cv} setCv={setCv} 
+  function DisplayCV({cv}) {
+    return (
+      <h1>{cv[0].name}</h1>
+    )
+  }
 
   return (
     <>
-    <Form />  
-    {/* <DisplayCV data={cv} setCv={setCv}/> */}
+    <Form/>  
+    <DisplayCV cv={cv}/>
     </>
   )
 }
