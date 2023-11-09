@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { cvData } from './components/data'
 import { formStructure } from './components/data'
+import Input from './components/input'
 
 import './App.css'
 
@@ -15,13 +16,20 @@ const [cv, setCv] = useState(cvData)
     console.log(data.get("what"))
   }
 
+  function handleInput(e) {
+    setCv(cv.map(obj => {
+      if (Object.hasOwn(obj, e.target.id)) {
+        return {...obj, [e.target.id]: e.target.value}
+      } else return obj
+    }))
+  }
 
-  function Form({data, setCv}) {
+  function Form() {
     return (
       <>
       <form onSubmit={handleClick}>
         <h1>CV</h1>
-        <Fieldset legends={formStructure} data={data} setCv={setCv}/>
+        <Fieldset legends={formStructure}/>
         <Button title="SEND" type="submit"/>
         <Button title="EDIT" type="button" />
       </form>
@@ -29,14 +37,22 @@ const [cv, setCv] = useState(cvData)
     )
   }
 
-  function Button({title, type}) {
-    return (
-      <button id={title} type={type}>{title}</button>
-    )
+  function Fieldset({legends}) {
+    const listCategories = legends.map((legend, index) => {
+      return (
+        <>
+        <fieldset>
+          <legend>{legend.category}</legend>
+            <Label legend={legends[index]} pos={index}/> 
+        </fieldset>
+        </>
+      )
+    })
+    return listCategories
   }
 
   function Label({legend, pos}) {
-    // cv={cv} setCv={setCv}
+    
     const listLabels = legend.labels.map((label, index) => {
     const inputKey = Object.keys(cv[pos])
     const inputValue = Object.values(cv[pos])
@@ -47,52 +63,10 @@ const [cv, setCv] = useState(cvData)
     return listLabels
   }
   
-  function handleInput(e) {
-    setCv(cv.map(obj => {
-      if (Object.hasOwn(obj, e.target.id)) {
-        return {...obj, [e.target.id]: e.target.value}
-      } else return obj
-    }))
-  }
-
-  function Input({inputKey, inputValues, onInput}) {
-    // function handleChange(e) {
-    //   const newState = data.map((obj, index) => {
-    //     if (Object.hasOwn(obj, e.target.id)) { // if key of object matches id of element     
-    //       return {...obj, [e.target.id]: e.target.value}
-    //     }  return obj
-    //   })
-    //   console.log(newState)
-    //   setCv(newState)
-    // }
-  function handleInput(e) {
-    onInput(e)
-  }
-
+  function Button({title, type}) {
     return (
-      <input
-        key={inputKey}
-        type={typeof inputValues}
-        id={inputKey}
-        name={inputKey}
-        value={inputValues}
-        onChange={handleInput}
-      />
+      <button id={title} type={type}>{title}</button>
     )
-  }
-
-  function Fieldset({legends, data, setCv}) {
-    const listCategories = legends.map((legend, index) => {
-      return (
-        <>
-        <fieldset>
-          <legend>{legend.category}</legend>
-            <Label key={index} legend={legends[index]} pos={index} data={data} setCv={setCv}/> 
-        </fieldset>
-        </>
-      )
-    })
-    return listCategories
   }
 
   function DisplayCV({cv}) {
