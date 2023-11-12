@@ -7,16 +7,16 @@ export function Form({cv, setCv}) {
       <form onSubmit={handleClick}>
         <h1>CV</h1>
         <Fieldset legends={formStructure} cv={cv} setCv={setCv}/>
-        <Button title="SEND" type="submit"/>
-        <Button title="EDIT" type="button" />
+        {/* <Button title="SEND" type="submit"/>
+        <Button title="EDIT" type="button" /> */}
       </form>
     )
-  }
+}
 
-  function handleClick(e) {
+function handleClick(e) {
     e.preventDefault()
     const data = new FormData(e.target)
     console.log(data.get("name"))
     console.log(data.get("email"))
     console.log(data.get("what"))
-  }
+}
